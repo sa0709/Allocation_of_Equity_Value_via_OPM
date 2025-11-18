@@ -156,7 +156,21 @@ val_shares = np.dot(arr, opt_val)
 df_val = pd.DataFrame(index=norm_df_dist.index)
 df_val['Total Value'] = val_shares
 
+df_val['# Shares'] = df2['# Shares']
+
 # Value per share, scaling back from million
 df_val['Value Per Share'] = df_val['Total Value'] / df2['# Shares'] * 10**6
 
-df_val
+#recording breakpoints in a dataframe
+df_breakpoints = pd.DataFrame(index = norm_df_dist.columns)
+
+df_breakpoints['Beginning Tranche Breakpoint'] = breakpoint_cum
+df_breakpoints['Ending Tranche Breakpoint'] = df_breakpoints['Beginning Tranche Breakpoint'].shift(-1)
+df_breakpoints = df_breakpoints.replace(to_replace = df_breakpoints.iloc[-1,-1], value = "Infinity")
+
+# saving data to excel file
+excel_file_path = 'Output.xlsx'
+with pd.ExcelWriter(excel_file_path) as writer:
+    norm_df_dist.transpose().to_excel(writer, sheet_name='Distribution', index = True)
+    df_val.transpose().to_excel(writer, sheet_name='Value', index=True)
+    df_breakpoints.to_excel(writer, sheet_name='Breakpoints', index=True)
