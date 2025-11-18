@@ -101,7 +101,7 @@ opt_val = []
 for i in breakpoint_cum:
     opt_val.append(
         black_scholes(
-            df1.iloc[0, 1],  # Stock price
+            df1.iloc[0, 1], # Stock price
             i,              # Strike
             df1.iloc[3, 1], # Time to maturity
             df1.iloc[1, 1], # Risk-free rate
