@@ -101,8 +101,8 @@ opt_val = []
 for i in breakpoint_cum:
     opt_val.append(
         black_scholes(
-            df1.iloc[0, 1], # Stock price
-            i,              # Strike price
+            df1.iloc[0, 1],  # Stock price
+            i,              # Strike
             df1.iloc[3, 1], # Time to maturity
             df1.iloc[1, 1], # Risk-free rate
             df1.iloc[2, 1]  # Volatility
@@ -151,7 +151,7 @@ arr = norm_df_dist.to_numpy()
 # ---------------------------------------------------------
 # 14. VALUE OF SHARES = Weighted sum of tranche values
 # ---------------------------------------------------------
-val_shares = np.dot(arr, opt_val)
+val_shares = np.dot(arr, tranche_val)
 
 df_val = pd.DataFrame(index=norm_df_dist.index)
 df_val['Total Value'] = val_shares
